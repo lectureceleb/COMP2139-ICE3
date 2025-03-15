@@ -18,7 +18,7 @@ public class ProjectsController : Controller
     public IActionResult Index()
     {
         // Database --> Retrieve all projects from database
-        var projects = _context.Projects.ToList();
+        var projects = _context.Projects.OrderBy(p => p.ProjectId).ToList();   // Sort by id
         return View(projects);
     }
 
@@ -59,6 +59,77 @@ public class ProjectsController : Controller
         project.StartDate = DateTime.Now;   // Convert UTC to current time equivalent
         project.EndDate = DateTime.Now;     // Convert UTC to current time equivalent
         return View(project);
+    }
+
+    [HttpGet]
+    public IActionResult Edit(int id)
+    {
+        //  Database --> Retrieve project from database with specified id or returns null if not found
+        var project = _context.Projects.FirstOrDefault(p => p.ProjectId == id);
+        
+        if (project == null) return NotFound(); 
+        return View(project);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Edit(int id, [Bind("ProjectId, Name, Description")] Project project)
+    {
+        // [Bind] ensures only the specified properties are updated
+        if (id != project.ProjectId)
+        {
+            return NotFound();   // Ensures the id in the route matches the id of the passed in project
+        }
+        
+        // Update projects if data passes server-side validation
+        if (ModelState.IsValid)
+        {
+            try
+            {
+                _context.Update(project);   // Update the project
+                _context.SaveChanges();     // Commit changes
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ProjectExists(project.ProjectId))
+                {
+                    return NotFound();
+                }
+            }
+            return RedirectToAction("Index");
+        }
+        return View(project);
+    }
+
+    // Checks for existence of project by provided id
+    private bool ProjectExists(int id)
+    {
+        return _context.Projects.Any(e => e.ProjectId == id);
+    }
+
+    [HttpGet]
+    public IActionResult Delete(int id)
+    {
+        var project = _context.Projects.FirstOrDefault(p => p.ProjectId == id);
+        if (project == null)
+        {
+            return NotFound();
+        }
+        return View(project);
+    }
+
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public IActionResult DeleteConfirmed(int id)
+    {
+        
+        //  Find the project by its primary key
+        var project = _context.Projects.Find(id);
+        if (project == null) return NotFound();
+        
+        _context.Projects.Remove(project);  // Remove project from database
+        _context.SaveChanges();             // Commit changes to database
+        return RedirectToAction("Index");
     }
     
 }

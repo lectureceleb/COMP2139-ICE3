@@ -1,5 +1,7 @@
 body {
     background: lightgrey;
+    
+    --color-strong-warning: red;
 }
 
 .page-title {
@@ -14,8 +16,17 @@ body {
     color: black;
 }
 .not-found-fatal {
-    background: red;
+    background: var(--color-strong-warning);
     color: black;
+}
+.confirm-delete {
+    margin-left: 1em;
+    padding: 5px;
+    border: 1px solid var(--color-strong-warning);
+    border-radius: 5px;
+    background: var(--color-strong-warning);
+    
+    color: white;   /* Play with the contrast of this */
 }
 
 
