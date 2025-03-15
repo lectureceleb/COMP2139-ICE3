@@ -20,17 +20,15 @@ public class Project
     /// Optional project description
     /// </summary>
     public string? Description { get; set; }
-    
+
     /// <summary>
     /// A project's start date
     /// </summary>
-    [DataType(DataType.Date)]
     public DateTime StartDate { get; set; }
-    
+
     /// <summary>
     /// A project's end date
     /// </summary>
-    [DataType(DataType.Date)]
     public DateTime EndDate { get; set; }
     
     /// <summary>

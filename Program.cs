@@ -1,7 +1,14 @@
+using Microsoft.EntityFrameworkCore;
+using ICE3.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Add the context to the service collection with a connection string
+builder.Services.AddDbContext<ApplicationDbContext>( options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
