@@ -1,8 +1,10 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewBag.Page = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div>
+    <h1 class="page-title display-4 text-center">@ViewBag.Page</h1>
+    
+    <br/>
+    <p class="text-center">This is the homepage for Omar's In-Class Assignment (ICE).</p>
 </div>
