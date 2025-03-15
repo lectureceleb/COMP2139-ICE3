@@ -5,6 +5,7 @@ using ICE3.Models;
 
 namespace ICE3.Controllers;
 
+[Route("[controller]/[action]")]
 public class ProjectsController : Controller
 {
     private readonly ApplicationDbContext _context;
@@ -46,11 +47,11 @@ public class ProjectsController : Controller
         return View(project);
     }
 
-    [HttpGet]
-    public IActionResult Details(int id)
+    [HttpGet,Route("{projectId:int}")]
+    public IActionResult Details(int projectId)
     {
-        //  Database --> Retrieve project from database with specified id or returns null if not found
-        var project = _context.Projects.FirstOrDefault(p => p.ProjectId == id);
+        //  Database --> Retrieve project from database with specified id or return null if not found
+        var project = _context.Projects.FirstOrDefault(p => p.ProjectId == projectId);
         if (project == null)
         {
             return NotFound();
@@ -61,11 +62,11 @@ public class ProjectsController : Controller
         return View(project);
     }
 
-    [HttpGet]
-    public IActionResult Edit(int id)
+    [HttpGet, Route("{projectId:int}")]
+    public IActionResult Edit(int projectId)
     {
-        //  Database --> Retrieve project from database with specified id or returns null if not found
-        var project = _context.Projects.FirstOrDefault(p => p.ProjectId == id);
+        //  Database --> Retrieve project from database with specified id or return null if not found
+        var project = _context.Projects.FirstOrDefault(p => p.ProjectId == projectId);
         
         if (project == null) return NotFound(); 
         return View(project);
@@ -73,12 +74,12 @@ public class ProjectsController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Edit(int id, [Bind("ProjectId, Name, Description")] Project project)
+    public IActionResult Edit(int projectId, [Bind("ProjectId, Name, Description")] Project project)
     {
         // [Bind] ensures only the specified properties are updated
-        if (id != project.ProjectId)
+        if (projectId != project.ProjectId)
         {
-            return NotFound();   // Ensures the id in the route matches the id of the passed in project
+            return NotFound();   // Ensures the id in the route matches the id of the injected project
         }
         
         // Update projects if data passes server-side validation
@@ -101,16 +102,16 @@ public class ProjectsController : Controller
         return View(project);
     }
 
-    // Checks for existence of project by provided id
+    // Checks for existence of a project by provided the id
     private bool ProjectExists(int id)
     {
         return _context.Projects.Any(e => e.ProjectId == id);
     }
 
-    [HttpGet]
-    public IActionResult Delete(int id)
+    [HttpGet, Route("{projectId:int}")]
+    public IActionResult Delete(int projectId)
     {
-        var project = _context.Projects.FirstOrDefault(p => p.ProjectId == id);
+        var project = _context.Projects.FirstOrDefault(p => p.ProjectId == projectId);
         if (project == null)
         {
             return NotFound();
@@ -120,11 +121,10 @@ public class ProjectsController : Controller
 
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    public IActionResult DeleteConfirmed(int id)
+    public IActionResult DeleteConfirmed(int projectId)
     {
-        
-        //  Find the project by its primary key
-        var project = _context.Projects.Find(id);
+        //  Find a project by its primary key
+        var project = _context.Projects.Find(projectId);
         if (project == null) return NotFound();
         
         _context.Projects.Remove(project);  // Remove project from database

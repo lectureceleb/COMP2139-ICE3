@@ -36,4 +36,12 @@ public class Project
     /// </summary>
     public string? Status { get; set; }
     
+    
+    // Navigation Properties
+
+    /// <summary>
+    /// The collection of tasks that belong to this project
+    /// </summary>
+    public List<ProjectTask>? Tasks { get; set; } = new();
+
 }
