@@ -5,6 +5,8 @@
     Layout = "_Layout";
     
     ViewBag.Page = "Projects";
+    var searchPerformed = ViewBag.SearchPerformed;
+    string searchString = ViewBag.SearchString;
 }
 
 <div>
@@ -45,6 +47,17 @@
                 }
                 </tbody>
             </table>
+        }
+        else
+        {
+            if (searchPerformed)
+            {
+                <p>No projects containing "@searchString" were found.</p>
+            }
+            else
+            {
+                <p>No projects available.</p>
+            }
         }
     }
     catch (ArgumentNullException)

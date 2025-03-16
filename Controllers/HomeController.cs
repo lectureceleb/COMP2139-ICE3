@@ -30,4 +30,34 @@ public class HomeController : Controller
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
+
+    [HttpGet]
+    public IActionResult GeneralSearch(string searchType, string searchString)
+    {
+        // Ensure searchType is not null and handles case-insensitivity
+        searchType = searchType?.Trim().ToLower();
+        
+        // Ensure the search string is not empty
+        if (string.IsNullOrWhiteSpace(searchType) || string.IsNullOrWhiteSpace(searchString))
+        {
+            // Redirect back to home if the search is empty
+            return RedirectToAction(nameof(Index), "Home");
+        }
+        
+        // Determine where to redirect based on search type
+        if (searchType == "projects")
+        {
+            // Redirect to Project search
+            return RedirectToAction(nameof(ProjectsController.Search), "Projects", new { searchString });
+        }
+        
+        if (searchType == "tasks")
+        {
+            // Redirect to ProjectTask search
+            return RedirectToAction(nameof(ProjectTasksController.Search), "ProjectTasks", new { searchString });
+        }
+        
+        // If search is invalid, redirect to Home page
+        return RedirectToAction(nameof(Index), "Home");
+    }
 }

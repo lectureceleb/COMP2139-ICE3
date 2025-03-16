@@ -5,6 +5,8 @@
     Layout = "_Layout";
     
     ViewBag.Page = "Tasks";
+    var searchPerformed = ViewBag.SearchPerformed;
+    string searchString = ViewBag.SearchString;
 }
 
 <div>
@@ -13,42 +15,53 @@
     @* Check for existence of a database *@
     @try
     {
-        // Iteration case
-        <table class="table">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Project ID</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-
-            <tbody>
-            @foreach (var task in Model)
-            {
+        @if (Model.Any())
+        {
+            // Iteration case
+            <table class="table">
+                <thead>
                 <tr>
-                    <td>@task.ProjectTaskId</td>
-                    <td>@task.Title</td>
-                    <td>@task.Description</td>
-
-                    <td>
-                        <a asp-action="Details" asp-route-taskId="@task.ProjectTaskId" class="btn btn-info">Details</a>
-                        <a asp-action="Edit" asp-route-taskId="@task.ProjectTaskId" class="btn btn-warning">Edit</a>
-                        <a asp-action="Delete" asp-route-taskId="@task.ProjectTaskId" class="btn btn-danger">Delete</a>
-                    </td>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Project ID</th>
+                    <th>Actions</th>
                 </tr>
+                </thead>
+
+                <tbody>
+                @foreach (var task in Model)
+                {
+                    <tr>
+                        <td>@task.ProjectTaskId</td>
+                        <td>@task.Title</td>
+                        <td>@task.Description</td>
+
+                        <td>
+                            <a asp-action="Details" asp-route-taskId="@task.ProjectTaskId" class="btn btn-info">Details</a>
+                            <a asp-action="Edit" asp-route-taskId="@task.ProjectTaskId" class="btn btn-warning">Edit</a>
+                            <a asp-action="Delete" asp-route-taskId="@task.ProjectTaskId" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+            
+            <a asp-action="Create" asp-route-projectId="@ViewBag.ProjectId" class="btn btn-success">Create New Task</a>
+            <a asp-controller="Projects" asp-action="Index" class="btn btn-primary">Back to Projects</a>
+        }
+        else
+        {
+            if (searchPerformed)
+            {
+                <p>No tasks containing "@searchString" were found.</p>
             }
-            </tbody>
-        </table>
-        
-        <a asp-action="Create" asp-route-projectId="@ViewBag.ProjectId" class="btn btn-success">Create New Task</a>
-        <a asp-controller="Projects" asp-action="Index" class="btn btn-primary">Back to Projects</a>
+        }
     }
     catch (ArgumentNullException)
     {
-        <p class="not-found-db d-inline-block">Database not detected.  Please try again later.</p>
+        <p>No tasks available.</p>
+        @* <p class="not-found-db d-inline-block">Database not detected.  Please try again later.</p> *@
     }
     catch (Exception)
     {

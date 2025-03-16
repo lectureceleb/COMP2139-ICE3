@@ -16,10 +16,11 @@ public class ProjectsController : Controller
     }
 
     [HttpGet]
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
         // Database --> Retrieve all projects from database
-        var projects = _context.Projects.OrderBy(p => p.ProjectId).ToList();   // Sort by id
+        var projects= await _context.Projects.OrderBy(p => p.ProjectId).ToListAsync();   // Sort by id
+        
         return View(projects);
     }
 
@@ -33,7 +34,7 @@ public class ProjectsController : Controller
     
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Create(Project project)
+    public async Task<IActionResult> Create(Project project)
     {
         // Database --> Persist new project to the database
         if (ModelState.IsValid)
@@ -41,17 +42,17 @@ public class ProjectsController : Controller
             project.StartDate = DateTime.UtcNow;    // Convert current time to UTC equivalent
             project.EndDate = DateTime.UtcNow;      // Convert current time to UTC equivalent
             _context.Projects.Add(project);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
         return View(project);
     }
 
     [HttpGet,Route("{projectId:int}")]
-    public IActionResult Details(int projectId)
+    public async Task<IActionResult> Details(int projectId)
     {
         //  Database --> Retrieve project from database with specified id or return null if not found
-        var project = _context.Projects.FirstOrDefault(p => p.ProjectId == projectId);
+        var project = await _context.Projects.FirstOrDefaultAsync(p => p.ProjectId == projectId);
         if (project == null)
         {
             return NotFound();
@@ -74,7 +75,7 @@ public class ProjectsController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Edit(int projectId, [Bind("ProjectId, Name, Description")] Project project)
+    public async Task<IActionResult> Edit(int projectId, [Bind("ProjectId, Name, Description")] Project project)
     {
         // [Bind] ensures only the specified properties are updated
         if (projectId != project.ProjectId)
@@ -88,11 +89,11 @@ public class ProjectsController : Controller
             try
             {
                 _context.Update(project);   // Update the project
-                _context.SaveChanges();     // Commit changes
+                await _context.SaveChangesAsync();     // Commit changes
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProjectExists(project.ProjectId))
+                if (!await ProjectExists(project.ProjectId))
                 {
                     return NotFound();
                 }
@@ -103,15 +104,15 @@ public class ProjectsController : Controller
     }
 
     // Checks for existence of a project by provided the id
-    private bool ProjectExists(int id)
+    private async Task<bool> ProjectExists(int id)
     {
-        return _context.Projects.Any(e => e.ProjectId == id);
+        return await _context.Projects.AnyAsync(e => e.ProjectId == id);
     }
 
     [HttpGet, Route("{projectId:int}")]
-    public IActionResult Delete(int projectId)
+    public async Task<IActionResult> Delete(int projectId)
     {
-        var project = _context.Projects.FirstOrDefault(p => p.ProjectId == projectId);
+        var project = await _context.Projects.FirstOrDefaultAsync(p => p.ProjectId == projectId);
         if (project == null)
         {
             return NotFound();
@@ -121,15 +122,45 @@ public class ProjectsController : Controller
 
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    public IActionResult DeleteConfirmed(int projectId)
+    public async Task<IActionResult> DeleteConfirmed(int projectId)
     {
         //  Find a project by its primary key
-        var project = _context.Projects.Find(projectId);
+        var project = await _context.Projects.FindAsync(projectId);
         if (project == null) return NotFound();
         
         _context.Projects.Remove(project);  // Remove project from database
-        _context.SaveChanges();             // Commit changes to database
+        await _context.SaveChangesAsync();             // Commit changes to database
         return RedirectToAction("Index");
+    }
+
+    [HttpGet, Route("{searchString?}")]
+    public async Task<IActionResult> Search(string searchString)
+    {
+        // Fetch all projects from the database as an IQueryable collection
+        // IQueryable allows us to apply filters before executing the database query
+        var projectsQuery = _context.Projects.AsQueryable();
+        
+        // Check if a search string was provided (avoids null or empty search issues)
+        bool searchPerformed = !string.IsNullOrWhiteSpace(searchString);
+
+        if (searchPerformed)
+        {
+            // Convert searchString to lowercase to make the search case-insensitive
+            searchString = searchString.ToLower();
+
+            projectsQuery = projectsQuery.Where(p =>
+                p.Name.ToLower().Contains(searchString) ||
+                (p.Description != null && p.Description.ToLower().Contains(searchString)));
+        }
+
+        // Asynchronous execution means this method does not block the thread while waiting for the database
+        var projects = await projectsQuery.ToListAsync();
+        
+        // Pass search metadata
+        ViewBag.SearchString = searchString;
+        ViewBag.SearchPerformed = searchPerformed;
+        
+        return View("Index", projects);
     }
     
 }
