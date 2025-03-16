@@ -1,0 +1,20 @@
+﻿@model ICE3.Areas.ProjectManagement.Models.Project
+
+<div class="project-summary">
+    <p>@Html.DisplayFor(model => model.Name, "ProjectName")</p>
+    <p>@Html.DisplayFor(model => model.Description, "ProjectDescription")</p>
+    <p><b>Start Date: </b>@Html.DisplayFor(model => model.StartDate, "Datetime")</p>
+    <p><b>End Date: </b>@Html.DisplayFor(model => model.EndDate, "Datetime")</p>
+    <p><b>Status: </b>@Html.DisplayFor(model => model.Status, "ProjectName")</p>
+    
+    <p><b>Tasks</b></p>
+    <ul>
+        @foreach (var task in Model.Tasks)
+        {
+            <li>
+                <p>@Html.DisplayFor(model => task.Title, "ProjectTaskTitle")</p>
+                <p>@Html.DisplayFor(model => task.Description, "ProjectDescription")</p>
+            </li>
+        }
+    </ul>
+</div>
