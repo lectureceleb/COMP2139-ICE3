@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ICE3.Data;
+using ICE3.Areas.ProjectManagement.Models;
 using ICE3.Models;
 
-namespace ICE3.Controllers;
+namespace ICE3.Areas.ProjectManagement.Controllers;
 
+[Area("ProjectManagement")]
 [Route("Tasks/[action]")]
 public class ProjectTasksController : Controller
 {
@@ -15,7 +17,7 @@ public class ProjectTasksController : Controller
         _context = context;
     }
 
-    [HttpGet,Route("{projectId:int}")]
+    [HttpGet ("{projectId:int}")]
     public async Task<IActionResult> Index(int projectId)
     {
         // Database --> Retrieve all tasks that belong to the supplied projectId
@@ -28,7 +30,7 @@ public class ProjectTasksController : Controller
         return View(tasks);
     }
     
-    [HttpGet,Route("{taskId:int}")]
+    [HttpGet("{taskId:int}")]
     public async Task<IActionResult> Details(int taskId)
     {
         //  Database --> Retrieve task from database with specified id or return null if not found
@@ -41,7 +43,7 @@ public class ProjectTasksController : Controller
         return View(task);
     }
 
-    [HttpGet,Route("{projectId:int}")]
+    [HttpGet("{projectId:int}")]
     public async Task<IActionResult> Create(int projectId)
     {
         //  Database --> Retrieve task from database with specified id or return null if not found
@@ -59,7 +61,7 @@ public class ProjectTasksController : Controller
         return View(task);
     }
 
-    [HttpPost]
+    [HttpPost("{projectId:int}")] //
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create([Bind("Title, Description, ProjectId")] ProjectTask task)
     {
@@ -87,7 +89,7 @@ public class ProjectTasksController : Controller
         return View(task);
     }
 
-    [HttpPost, Route("{taskId:int}")]
+    [HttpPost("{taskId:int}")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int taskId, [Bind("ProjectTaskId, Title, Description, ProjectId")] ProjectTask task)
     {
@@ -116,7 +118,7 @@ public class ProjectTasksController : Controller
         return await _context.Projects.AnyAsync(e => e.ProjectId == taskId);
     }
 
-    [HttpGet,Route("{taskId:int}")]
+    [HttpGet ("{taskId:int}")]
     public async Task<IActionResult> Delete(int taskId)
     {
         var task = await _context
@@ -128,7 +130,7 @@ public class ProjectTasksController : Controller
         return View(task);
     }
 
-    [HttpPost, ActionName("Delete"), Route("{taskId:int}")]
+    [HttpPost("Delete/{taskId:int}"), ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int taskId)
     {
@@ -143,7 +145,7 @@ public class ProjectTasksController : Controller
         return View(task);
     }
 
-    [HttpGet, Route("")]
+    [HttpGet("{searchString}")]
     public async Task<IActionResult> Search(int? projectId, string searchString)
     {
         var tasksQuery = _context.Tasks.AsQueryable();

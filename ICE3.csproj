@@ -16,4 +16,23 @@
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\Projects\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Projects\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Projects\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Projects\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Projects\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ProjectTasks\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ProjectTasks\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ProjectTasks\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ProjectTasks\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\ProjectTasks\Index.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Areas\ProjectManagement\Views\Projects\Create.cshtml" />
+      <AdditionalFiles Include="Areas\ProjectManagement\Views\Projects\Details.cshtml" />
+      <AdditionalFiles Include="Areas\ProjectManagement\Views\Projects\Index.cshtml" />
+    </ItemGroup>
+
 </Project>

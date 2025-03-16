@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ICE3.Models;
+using ICE3.Areas.ProjectManagement.Models;
 
 namespace ICE3.Data;
 

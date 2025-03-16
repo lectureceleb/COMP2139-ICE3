@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ICE3.Models;
+namespace ICE3.Areas.ProjectManagement.Models;
 
 public class ProjectTask
 {
@@ -13,13 +13,18 @@ public class ProjectTask
     /// <summary>
     /// Required field describing a task's name
     /// </summary>
+    [Display(Name = "Task Title")]
     [Required]
+    [StringLength(100, ErrorMessage = "Project name cannot be longer than 100 characters.")]
     public required string Title { get; set; }
 
     /// <summary>
     /// Mandatory task description
     /// </summary>
+    [Display(Name = "Task Description")]
     [Required]
+    [DataType(DataType.MultilineText)]
+    [StringLength(500, ErrorMessage = "Project name cannot be longer than 500 characters.")]
     public required string Description { get; set; }
     
     
@@ -28,7 +33,8 @@ public class ProjectTask
     /// <summary>
     /// Foreign key of the project this task belongs to
     /// </summary>
-    public required int ProjectId { get; set; }
+    [Display(Name = "Parent Project ID")]
+    public int ProjectId { get; set; }
     
     // This property allows for easy access to related Project entity from the Task entity
     /// <summary>

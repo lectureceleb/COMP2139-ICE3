@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ICE3.Data;
+using ICE3.Areas.ProjectManagement.Models;
 using ICE3.Models;
 
-namespace ICE3.Controllers;
+namespace ICE3.Areas.ProjectManagement.Controllers;
 
+[Area("ProjectManagement")]
 [Route("[controller]/[action]")]
 public class ProjectsController : Controller
 {
@@ -48,7 +50,7 @@ public class ProjectsController : Controller
         return View(project);
     }
 
-    [HttpGet,Route("{projectId:int}")]
+    [HttpGet ("{projectId:int}")]
     public async Task<IActionResult> Details(int projectId)
     {
         //  Database --> Retrieve project from database with specified id or return null if not found
@@ -73,7 +75,7 @@ public class ProjectsController : Controller
         return View(project);
     }
 
-    [HttpPost]
+    [HttpPost ("{projectId:int}")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int projectId, [Bind("ProjectId, Name, Description")] Project project)
     {
@@ -120,7 +122,7 @@ public class ProjectsController : Controller
         return View(project);
     }
 
-    [HttpPost, ActionName("Delete")]
+    [HttpPost("Delete/{projectId:int}"), ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int projectId)
     {
@@ -133,7 +135,7 @@ public class ProjectsController : Controller
         return RedirectToAction("Index");
     }
 
-    [HttpGet, Route("{searchString?}")]
+    [HttpGet, Route("{searchString}")]
     public async Task<IActionResult> Search(string searchString)
     {
         // Fetch all projects from the database as an IQueryable collection
