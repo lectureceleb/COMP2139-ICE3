@@ -5,9 +5,9 @@
            asp-area=""
            asp-controller="Home"
            asp-action="Index">
-            <i class="fa-solid fa-crown" style="color: #f2be02;"></i>
+            <i class="fa-solid fa-crown" style="color: var(--color-majestic-logo-crown);"></i>
             @ViewBag.Brand <i class="fa-solid fa-dragon" style="color: #21b589;"></i>
-            <i class="fa-solid fa-meteor fa-rotate-by fa-xs" style="color: #ff8800; --fa-rotate-angle: 240deg;"></i>
+            <i class="fa-solid fa-meteor fa-rotate-by fa-xs" style="color: #ff8c3a; --fa-rotate-angle: 240deg;"></i>
         </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -34,19 +34,25 @@
             <ul class="navbar-nav flex-grow-1 justify-content-end">
                 <li class="nav-item">
                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">
-                        <i class="fa-solid fa-hotel" style="color: #B197FC;"></i> Home
+                        <i class="fa-solid fa-hotel" style="color: var(--color-majestic-brand-1);"></i> Home
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Videos">
+                        <i class="fa-solid fa-film" style="color: #f2be02;"></i> Videos
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link text-dark" asp-area="ProjectManagement" asp-controller="Projects" asp-action="Index">
-                        <i class="fa-solid fa-clipboard" style="color: #1a9e00;"></i> Projects
+                        <i class="fa-solid fa-clipboard" style="color: var(--color-majestic-logo-dragon);"></i> Projects
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">
-                        <i class="fa-solid fa-circle-info" style="color: #42a4ff;"></i> About
+                        <i class="fa-solid fa-circle-info" style="color: var(--color-majestic-brand-3);"></i> About
                     </a>
                 </li>
 
