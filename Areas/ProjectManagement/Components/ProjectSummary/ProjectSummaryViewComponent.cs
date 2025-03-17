@@ -1,7 +1,6 @@
 ﻿using ICE3.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace ICE3.Areas.ProjectManagement.Components.ProjectSummary;
 
@@ -19,7 +18,9 @@ public class ProjectSummaryViewComponent : ViewComponent
         var project = await _context.Projects
             .Include(p => p.Tasks)
             .FirstOrDefaultAsync(p => p.ProjectId == projectId);
-
+        
+        return (project == null) ? Content("Project not found.") : View(project);
+        
         if (project == null) return Content("Project not found.");
         return View(project);
     }

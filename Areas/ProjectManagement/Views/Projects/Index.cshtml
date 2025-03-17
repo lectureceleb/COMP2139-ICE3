@@ -5,7 +5,7 @@
     Layout = "_Layout";
     
     ViewBag.Page = "Projects";
-    var searchPerformed = ViewBag.SearchPerformed;
+    bool searchPerformed = ViewBag.SearchPerformed != null ? ViewBag.SearchPerformed : false;
     string searchString = ViewBag.SearchString;
 }
 
@@ -25,6 +25,7 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Description</th>
+                    <th>Summary</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -34,14 +35,19 @@
                 {
                     <tr>
                         <td>@project.ProjectId</td>
-                        <td>@project.Name</td>
-                        <td>@project.Description</td>
+                        <td>@Html.DisplayFor(model => project.Name, "ProjectName")</td>
+                        <td>@Html.DisplayFor(model => project.Description, "ProjectDescription")</td>
 
+                        <!-- Call reusable view component -->
                         <td>
-                            <a asp-action="Details" asp-route-projectId="@project.ProjectId" class="btn btn-info">Details</a>
-                            <a asp-action="Edit" asp-route-projectId="@project.ProjectId" class="btn btn-warning">Edit</a>
-                            <a asp-action="Delete" asp-route-projectId="@project.ProjectId" class="btn btn-danger">Delete</a>
-                            <a asp-controller="ProjectTasks" asp-action="Index" asp-route-projectId="@project.ProjectId" class="btn btn-secondary">View Task</a>
+                            @await Component.InvokeAsync("ProjectSummary", new { projectId = project.ProjectId })
+                        </td>
+                        
+                        <td>
+                            <a asp-area="ProjectManagement" asp-controller="Projects" asp-action="Details" asp-route-projectId="@project.ProjectId" class="btn btn-info">Details</a>
+                            <a asp-area="ProjectManagement" asp-controller="Projects" asp-action="Edit" asp-route-projectId="@project.ProjectId" class="btn btn-warning">Edit</a>
+                            <a asp-area="ProjectManagement" asp-controller="Projects" asp-action="Delete" asp-route-projectId="@project.ProjectId" class="btn btn-danger">Delete</a>
+                            <a asp-area="ProjectManagement" asp-controller="ProjectTasks" asp-action="Index" asp-route-projectId="@project.ProjectId" class="btn btn-secondary">View Task</a>
                         </td>
                     </tr>
                 }

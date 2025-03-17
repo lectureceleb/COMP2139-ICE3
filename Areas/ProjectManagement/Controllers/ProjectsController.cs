@@ -111,7 +111,7 @@ public class ProjectsController : Controller
         return await _context.Projects.AnyAsync(e => e.ProjectId == id);
     }
 
-    [HttpGet, Route("{projectId:int}")]
+    [HttpGet("{projectId:int}")]
     public async Task<IActionResult> Delete(int projectId)
     {
         var project = await _context.Projects.FirstOrDefaultAsync(p => p.ProjectId == projectId);
@@ -122,7 +122,7 @@ public class ProjectsController : Controller
         return View(project);
     }
 
-    [HttpPost("Delete/{projectId:int}"), ActionName("Delete")]
+    [HttpPost("{projectId:int}"), ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int projectId)
     {

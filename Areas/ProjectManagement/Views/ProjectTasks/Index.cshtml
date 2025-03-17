@@ -5,7 +5,7 @@
     Layout = "_Layout";
     
     ViewBag.Page = "Tasks";
-    var searchPerformed = ViewBag.SearchPerformed;
+    bool searchPerformed = ViewBag.SearchPerformed != null ? ViewBag.SearchPerformed : false;
     string searchString = ViewBag.SearchString;
 }
 
@@ -56,6 +56,10 @@
             {
                 <p>No tasks containing "@searchString" were found.</p>
             }
+            else
+            {
+                <p>No tasks exist for the selected project.</p>
+            }
         }
     }
     catch (ArgumentNullException)
@@ -63,8 +67,8 @@
         <p>No tasks available.</p>
         @* <p class="not-found-db d-inline-block">Database not detected.  Please try again later.</p> *@
     }
-    catch (Exception)
-    {
-        <p class="not-found-fatal d-inline-block">Tasks currently unavailable.  Please try again later.</p>
-    }
+    @* catch (Exception) *@
+    @* { *@
+    @*     <p class="not-found-fatal d-inline-block">Tasks currently unavailable.  Please try again later.</p> *@
+    @* } *@
 </div>

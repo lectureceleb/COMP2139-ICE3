@@ -125,12 +125,14 @@ public class ProjectTasksController : Controller
             .Tasks
             .Include(t => t.Project)
             .FirstOrDefaultAsync(t => t.ProjectTaskId == taskId);
+
+        return (task == null) ? NotFound() : View(task);
         
-        if (task == null) return NotFound();
-        return View(task);
+        // if (task == null) return NotFound();
+        // return View(task);
     }
 
-    [HttpPost("Delete/{taskId:int}"), ActionName("Delete")]
+    [HttpPost("{taskId:int}"), ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int taskId)
     {
