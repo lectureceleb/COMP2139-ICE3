@@ -22,15 +22,15 @@ public class HomeController : Controller
     }
 
     [HttpGet]
-    public IActionResult About()
+    public IActionResult Videos()
     {
         return View();
     }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
+    [HttpGet]
+    public IActionResult About()
     {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        return View();
     }
 
     [HttpGet]
@@ -61,5 +61,11 @@ public class HomeController : Controller
         
         // If search is invalid, redirect to Home page
         return RedirectToAction(nameof(Index), "Home");
+    }
+
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
+    {
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }

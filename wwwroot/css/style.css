@@ -162,3 +162,22 @@ td.value {
     margin-top: 3rem;   /* Spacing after ... */
     /*border: 1px solid var(--color-majestic-border-1);*/
 }
+
+/* Videos Page */
+.iframe-majestic-demo-section {
+    border: 1px solid var(--color-majestic-border-1);
+    margin-top: 3rem;
+    background-color: var(--color-majestic-brand-2);
+}
+.iframe-majestic-demo-section h2 {
+    background-color: var(--color-majestic-brand-1);
+    border-bottom: 1px solid var(--color-majestic-border-1);
+    color: var(--color-majestic-text-title);
+}
+.iframe-majestic-demo-section h3, p {
+    margin: 1rem 0 1rem 1rem;
+}
+.iframe-majestic-demo {
+    margin: auto;
+    display: block;
+}
