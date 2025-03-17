@@ -16,17 +16,23 @@
 </head>
 <body>
 
-<!-- Partial view for header -->
-@Html.Partial("_Header")
+<main id="layout-flex-vert">
 
-<div class="container">
-    <main role="main" class="pb-3">
+    <h1 class="page-title display-4 text-center">@ViewBag.Page</h1>
+    <!-- Partial view for header -->
+    <section id="layout-header">
+        @Html.Partial("_Header")
+    </section>
+
+    <section id="layout-renderbody" role="main">
         @RenderBody()
-    </main>
-</div>
+    </section>
 
-<!-- Partial view for footer -->
-@Html.Partial("_Footer")
+    <!-- Partial view for footer -->
+    <section id="layout-footer">
+        @Html.Partial("_Footer")
+    </section>
+</main>
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

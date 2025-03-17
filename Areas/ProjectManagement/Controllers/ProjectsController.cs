@@ -21,8 +21,7 @@ public class ProjectsController : Controller
     public async Task<IActionResult> Index()
     {
         // Database --> Retrieve all projects from database
-        var projects= await _context.Projects.OrderBy(p => p.ProjectId).ToListAsync();   // Sort by id
-        
+        var projects = await _context.Projects.OrderBy(p => p.ProjectId).ToListAsync();   // Sort by id
         return View(projects);
     }
 

@@ -9,17 +9,15 @@
     string searchString = ViewBag.SearchString;
 }
 
-<div>
-    <h1 class="display-4 page-title text-center">@ViewBag.Page</h1>
-
-    @* Check for existence of a database *@
-    @try
-    {
-        if (Model.Any())
+<div class="majestic-view card">
+    @* <h1 class="display-4 page-title text-center">@ViewBag.Page</h1> *@
+    <div class="card-body">
+        @* Check for existence of a database *@
+        @try
         {
             <a asp-action="Create" class="btn btn-primary">Create New Project</a>
             // Iteration case
-            <table class="table">
+            <table class="table-majestic-list">
                 <thead>
                 <tr>
                     <th>ID</th>
@@ -29,49 +27,56 @@
                     <th>Actions</th>
                 </tr>
                 </thead>
-
-                <tbody>
-                @foreach (var project in Model)
-                {
-                    <tr>
-                        <td>@project.ProjectId</td>
-                        <td>@Html.DisplayFor(model => project.Name, "ProjectName")</td>
-                        <td>@Html.DisplayFor(model => project.Description, "ProjectDescription")</td>
-
-                        <!-- Call reusable view component -->
-                        <td>
-                            @await Component.InvokeAsync("ProjectSummary", new { projectId = project.ProjectId })
-                        </td>
-                        
-                        <td>
-                            <a asp-area="ProjectManagement" asp-controller="Projects" asp-action="Details" asp-route-projectId="@project.ProjectId" class="btn btn-info">Details</a>
-                            <a asp-area="ProjectManagement" asp-controller="Projects" asp-action="Edit" asp-route-projectId="@project.ProjectId" class="btn btn-warning">Edit</a>
-                            <a asp-area="ProjectManagement" asp-controller="Projects" asp-action="Delete" asp-route-projectId="@project.ProjectId" class="btn btn-danger">Delete</a>
-                            <a asp-area="ProjectManagement" asp-controller="ProjectTasks" asp-action="Index" asp-route-projectId="@project.ProjectId" class="btn btn-secondary">View Task</a>
-                        </td>
-                    </tr>
-                }
-                </tbody>
-            </table>
-        }
-        else
-        {
-            if (searchPerformed)
+            @if (Model.Any())
             {
-                <p>No projects containing "@searchString" were found.</p>
+
+                    <tbody>
+                    @foreach (var project in Model)
+                    {
+                        <tr>
+                            <td>@project.ProjectId</td>
+                            <td>@Html.DisplayFor(model => project.Name, "ProjectName")</td>
+                            <td>@Html.DisplayFor(model => project.Description, "ProjectDescription")</td>
+
+                            <!-- Call reusable view component -->
+                            <td>
+                                @await Component.InvokeAsync("ProjectSummary", new { projectId = project.ProjectId })
+                            </td>
+
+                            <td class="block">
+                                <div class="table-majestic-list-btn-col">
+                                    <a asp-area="ProjectManagement" asp-controller="Projects" asp-action="Details" asp-route-projectId="@project.ProjectId" class="btn btn-info">Details</a>
+                                    <a asp-area="ProjectManagement" asp-controller="Projects" asp-action="Edit" asp-route-projectId="@project.ProjectId" class="btn btn-warning">Edit</a>
+                                    <a asp-area="ProjectManagement" asp-controller="Projects" asp-action="Delete" asp-route-projectId="@project.ProjectId" class="btn btn-danger">Delete</a>
+                                    <a asp-area="ProjectManagement" asp-controller="ProjectTasks" asp-action="Index" asp-route-projectId="@project.ProjectId" class="btn btn-secondary">Tasks</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
             }
             else
             {
-                <p>No projects available.</p>
+                if (searchPerformed)
+                {
+                    <p>No projects containing "@searchString" were found.</p>
+                }
+                else
+                {
+                    <tr>
+                        <p colspan="5">No projects available.</p>
+                    </tr>
+                }
             }
+            </table>
         }
-    }
-    catch (ArgumentNullException)
-    {
-        <p class="not-found-db d-inline-block">Database not detected.  Please try again later.</p>
-    }
-    catch (Exception)
-    {
-        <p class="not-found-fatal d-inline-block">Projects currently unavailable.  Please try again later.</p>
-    }
+        catch (ArgumentNullException)
+        {
+            <p class="not-found-db d-inline-block">Database not detected. Please try again later.</p>
+        }
+        catch (Exception)
+        {
+            <p class="not-found-fatal d-inline-block">Projects currently unavailable. Please try again later.</p>
+        }
+    </div>
 </div>
