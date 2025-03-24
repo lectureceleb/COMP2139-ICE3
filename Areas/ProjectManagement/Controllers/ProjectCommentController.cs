@@ -33,10 +33,10 @@ public class ProjectCommentController : Controller
         {
             comment.DatePosted = DateTime.Now;  // Add the current date/time of comment creation
             
-            _context.Comments.Add(comment);     // Save the comment
-            await _context.SaveChangesAsync();  // Commit to database
+            await _context.Comments.AddAsync(comment);  // Save the comment
+            await _context.SaveChangesAsync();          // Commit to database
             
-            return Json( new { success = true, message = "Comment added." });
+            return Json( new { success = true, message = "Comment added successfully." });
         }
         
         // Collect any errors from the Json operation
