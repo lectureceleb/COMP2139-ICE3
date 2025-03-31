@@ -45,10 +45,10 @@
 
                             <td class="block">
                                 <div class="table-majestic-list-btn-col">
-                                    <a asp-area="ProjectManagement" asp-controller="Projects" asp-action="Details" asp-route-projectId="@project.ProjectId" class="btn btn-info">Details</a>
-                                    <a asp-area="ProjectManagement" asp-controller="Projects" asp-action="Edit" asp-route-projectId="@project.ProjectId" class="btn btn-warning">Edit</a>
-                                    <a asp-area="ProjectManagement" asp-controller="Projects" asp-action="Delete" asp-route-projectId="@project.ProjectId" class="btn btn-danger">Delete</a>
-                                    <a asp-area="ProjectManagement" asp-controller="ProjectTasks" asp-action="Index" asp-route-projectId="@project.ProjectId" class="btn btn-secondary">Tasks</a>
+                                    <a asp-area="ProjectManagement" asp-controller="Project" asp-action="Details" asp-route-projectId="@project.ProjectId" class="btn btn-info">Details</a>
+                                    <a asp-area="ProjectManagement" asp-controller="Project" asp-action="Edit" asp-route-projectId="@project.ProjectId" class="btn btn-warning">Edit</a>
+                                    <a asp-area="ProjectManagement" asp-controller="Project" asp-action="Delete" asp-route-projectId="@project.ProjectId" class="btn btn-danger">Delete</a>
+                                    <a asp-area="ProjectManagement" asp-controller="ProjectTask" asp-action="Index" asp-route-projectId="@project.ProjectId" class="btn btn-secondary">Tasks</a>
                                 </div>
                             </td>
                         </tr>

@@ -8,11 +8,12 @@ namespace ICE3.Areas.ProjectManagement.Controllers;
 
 [Area("ProjectManagement")]
 [Route("Tasks/[action]")]
-public class ProjectTasksController : Controller
+public class ProjectTaskController : Controller
 {
     private readonly ApplicationDbContext _context;
+    private readonly ILogger<ProjectController> _logger;
 
-    public ProjectTasksController(ApplicationDbContext context)
+    public ProjectTaskController(ApplicationDbContext context, ILogger<ProjectController> logger)
     {
         _context = context;
     }
@@ -20,6 +21,7 @@ public class ProjectTasksController : Controller
     [HttpGet ("{projectId:int}")]
     public async Task<IActionResult> Index(int projectId)
     {
+        _logger.LogInformation("Accessed ProjectTaskController Index at {Time}", DateTime.Now);
         // Database --> Retrieve all tasks that belong to the supplied projectId
         var tasks = await _context
             .Tasks
@@ -33,6 +35,7 @@ public class ProjectTasksController : Controller
     [HttpGet("{taskId:int}")]
     public async Task<IActionResult> Details(int taskId)
     {
+        _logger.LogInformation("Accessed ProjectTaskController Details at {Time}", DateTime.Now);
         //  Database --> Retrieve task from database with specified id or return null if not found
         var task = await _context
             .Tasks
@@ -46,6 +49,7 @@ public class ProjectTasksController : Controller
     [HttpGet("{projectId:int}")]
     public async Task<IActionResult> Create(int projectId)
     {
+        _logger.LogInformation("Accessed ProjectTaskController Create at {Time}", DateTime.Now);
         //  Database --> Retrieve task from database with specified id or return null if not found
         var project = await _context.Projects.FindAsync(projectId);
         if (project == null) return NotFound();   // Or handle appropriately if project doesn't exist
@@ -65,11 +69,13 @@ public class ProjectTasksController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create([Bind("Title, Description, ProjectId")] ProjectTask task)
     {
+        _logger.LogInformation("Accessed ProjectTaskController Create at {Time}", DateTime.Now);
         // Database --> Persist new task to the database
         if (ModelState.IsValid)
         {
             _context.Tasks.Add(task);
             await _context.SaveChangesAsync();
+            _logger.LogWarning("Could not create project task with id of {projectId} at {Time}", task.ProjectId, DateTime.Now);
             return RedirectToAction("Index", new { projectId = task.ProjectId });
         }
         return View(task);
@@ -78,6 +84,7 @@ public class ProjectTasksController : Controller
     [HttpGet, Route("{taskId:int}")]
     public async Task<IActionResult> Edit(int taskId)
     {
+        _logger.LogInformation("Accessed ProjectTaskController Edit at {Time}", DateTime.Now);
         //  Database --> Retrieve task from database with specified id or return null if not found
         var task = await _context
             .Tasks
@@ -93,6 +100,7 @@ public class ProjectTasksController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int taskId, [Bind("ProjectTaskId, Title, Description, ProjectId")] ProjectTask task)
     {
+        _logger.LogInformation("Accessed ProjectTaskController Edit at {Time}", DateTime.Now);
         if (taskId != task.ProjectTaskId) return NotFound();
         
         // Update projects if data passes server-side validation
@@ -121,6 +129,7 @@ public class ProjectTasksController : Controller
     [HttpGet ("{taskId:int}")]
     public async Task<IActionResult> Delete(int taskId)
     {
+        _logger.LogInformation("Accessed ProjectTaskController Delete at {Time}", DateTime.Now);
         var task = await _context
             .Tasks
             .Include(t => t.Project)
@@ -136,12 +145,14 @@ public class ProjectTasksController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int taskId)
     {
+        _logger.LogInformation("Accessed ProjectTaskController DeleteConfirmed at {Time}", DateTime.Now);
         var task = await _context.Tasks.FindAsync(taskId);
 
         if (task != null)
         {
             _context.Tasks.Remove(task);
             await _context.SaveChangesAsync();
+            _logger.LogWarning("Could not delete project task with id of {projectId} at {Time}", task.ProjectId, DateTime.Now);
             return RedirectToAction("Index", new { projectId = task.ProjectId });
         }
         return View(task);
@@ -150,6 +161,7 @@ public class ProjectTasksController : Controller
     [HttpGet("{searchString}")]
     public async Task<IActionResult> Search(int? projectId, string searchString)
     {
+        _logger.LogInformation("Accessed ProjectTaskController Search at {Time}", DateTime.Now);
         var tasksQuery = _context.Tasks.AsQueryable();
         
         bool searchPerformed = !string.IsNullOrWhiteSpace(searchString);

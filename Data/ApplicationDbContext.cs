@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ICE3.Models;
 using ICE3.Areas.ProjectManagement.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace ICE3.Data;
 
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext : IdentityDbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) {}
     
@@ -15,6 +16,9 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        // Ensure Identity configurations and tables are created
+        base.OnModelCreating(modelBuilder);
+        
         // One-to-Many relationship between Project and Task
         modelBuilder.Entity<Project>()
             .HasMany(p => p.Tasks)                  // One Project has (potentially) many Tasks

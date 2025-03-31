@@ -8,18 +8,21 @@ namespace ICE3.Areas.ProjectManagement.Controllers;
 
 [Area("ProjectManagement")]
 [Route("[controller]/[action]")]
-public class ProjectsController : Controller
+public class ProjectController : Controller
 {
     private readonly ApplicationDbContext _context;
+    private readonly ILogger<ProjectController> _logger;
 
-    public ProjectsController(ApplicationDbContext context)
+    public ProjectController(ApplicationDbContext context, ILogger<ProjectController> logger)
     {
         _context = context;
+        _logger = logger;
     }
 
     [HttpGet]
     public async Task<IActionResult> Index()
     {
+        _logger.LogInformation("Accessed ProjectController Index at {Time}", DateTime.Now);
         // Database --> Retrieve all projects from database
         var projects = await _context.Projects.OrderBy(p => p.ProjectId).ToListAsync();   // Sort by id
         return View(projects);
@@ -28,6 +31,7 @@ public class ProjectsController : Controller
     [HttpGet]
     public IActionResult Create()
     {
+        _logger.LogInformation("Accessed ProjectController Create at {Time}", DateTime.Now);
         return View();
     }
 
@@ -37,6 +41,7 @@ public class ProjectsController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(Project project)
     {
+        _logger.LogInformation("Accessed ProjectController Create at {Time}", DateTime.Now);
         // Database --> Persist new project to the database
         if (ModelState.IsValid)
         {
@@ -52,10 +57,12 @@ public class ProjectsController : Controller
     [HttpGet ("{projectId:int}")]
     public async Task<IActionResult> Details(int projectId)
     {
+        _logger.LogInformation("Accessed ProjectController Details at {Time}", DateTime.Now);
         //  Database --> Retrieve project from database with specified id or return null if not found
         var project = await _context.Projects.FirstOrDefaultAsync(p => p.ProjectId == projectId);
         if (project == null)
         {
+            _logger.LogWarning("Could not find project with id of {projectId} at {Time}", projectId, DateTime.Now);
             return NotFound();
         }
         
@@ -67,6 +74,7 @@ public class ProjectsController : Controller
     [HttpGet, Route("{projectId:int}")]
     public IActionResult Edit(int projectId)
     {
+        _logger.LogInformation("Accessed ProjectController Edit at {Time}", DateTime.Now);
         //  Database --> Retrieve project from database with specified id or return null if not found
         var project = _context.Projects.FirstOrDefault(p => p.ProjectId == projectId);
         
@@ -78,6 +86,7 @@ public class ProjectsController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int projectId, [Bind("ProjectId, Name, Description")] Project project)
     {
+        _logger.LogInformation("Accessed ProjectController Edit at {Time}", DateTime.Now);
         // [Bind] ensures only the specified properties are updated
         if (projectId != project.ProjectId)
         {
@@ -113,6 +122,7 @@ public class ProjectsController : Controller
     [HttpGet("{projectId:int}")]
     public async Task<IActionResult> Delete(int projectId)
     {
+        _logger.LogInformation("Accessed ProjectController Delete at {Time}", DateTime.Now);
         var project = await _context.Projects.FirstOrDefaultAsync(p => p.ProjectId == projectId);
         if (project == null)
         {
@@ -125,6 +135,7 @@ public class ProjectsController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int projectId)
     {
+        _logger.LogInformation("Accessed ProjectController DeleteConfirmed at {Time}", DateTime.Now);
         //  Find a project by its primary key
         var project = await _context.Projects.FindAsync(projectId);
         if (project == null) return NotFound();
@@ -137,6 +148,7 @@ public class ProjectsController : Controller
     [HttpGet, Route("{searchString}")]
     public async Task<IActionResult> Search(string searchString)
     {
+        _logger.LogInformation("Accessed ProjectController Search at {Time}", DateTime.Now);
         // Fetch all projects from the database as an IQueryable collection
         // IQueryable allows us to apply filters before executing the database query
         var projectsQuery = _context.Projects.AsQueryable();

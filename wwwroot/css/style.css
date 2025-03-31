@@ -68,7 +68,7 @@ body {
 #layout-renderbody {
     width: 90%;
     height: 100%;
-    margin: auto;
+    margin: 1em auto;
     border-left: 1px var(--color-majestic-border-1) solid;
     border-right: 1px var(--color-majestic-border-1) solid;
     background: white;
@@ -97,6 +97,10 @@ body {
     height: 100%;
     background-color: white;
     overflow: hidden;
+}
+.majestic-view img {
+    /*margin-top: 1em;*/
+    /*border-top: solid 2px white;*/
 }
 
 /* Views */
