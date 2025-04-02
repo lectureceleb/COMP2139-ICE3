@@ -9,74 +9,70 @@
     string searchString = ViewBag.SearchString;
 }
 
-<div class="majestic-view card">
-    @* <h1 class="display-4 page-title text-center">@ViewBag.Page</h1> *@
-    <div class="card-body">
-        @* Check for existence of a database *@
-        @try
-        {
-            <a asp-action="Create" class="btn btn-primary">Create New Project</a>
-            // Iteration case
-            <table class="table-majestic-list">
-                <thead>
+<div id="majestic-view">
+    @try
+    {
+        <a asp-action="Create" class="button button-create">Create New Project</a>
+        // Iteration case
+        <table class="table-majestic-list">
+            <thead>
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
-                    <th>Description</th>
-                    <th>Summary</th>
+                    <th class="left">Description</th>
+                    <th class="left">Summary</th>
                     <th>Actions</th>
                 </tr>
-                </thead>
-            @if (Model.Any())
+            </thead>
+        @if (Model.Any())
+        {
+            <tbody>
+            @foreach (var project in Model)
             {
+                <tr>
+                    <td class="text-center">@project.ProjectId</td>
+                    <td class="text-center">@Html.DisplayFor(model => project.Name, "ProjectName")</td>
+                    <td>@Html.DisplayFor(model => project.Description, "ProjectDescription")</td>
 
-                    <tbody>
-                    @foreach (var project in Model)
-                    {
-                        <tr>
-                            <td>@project.ProjectId</td>
-                            <td>@Html.DisplayFor(model => project.Name, "ProjectName")</td>
-                            <td>@Html.DisplayFor(model => project.Description, "ProjectDescription")</td>
+                    <!-- Call reusable view component -->
+                    <td>
+                        @await Component.InvokeAsync("ProjectSummary", new { projectId = project.ProjectId })
+                    </td>
 
-                            <!-- Call reusable view component -->
-                            <td>
-                                @await Component.InvokeAsync("ProjectSummary", new { projectId = project.ProjectId })
-                            </td>
-
-                            <td class="block">
-                                <div class="table-majestic-list-btn-col">
-                                    <a asp-area="ProjectManagement" asp-controller="Project" asp-action="Details" asp-route-projectId="@project.ProjectId" class="btn btn-info">Details</a>
-                                    <a asp-area="ProjectManagement" asp-controller="Project" asp-action="Edit" asp-route-projectId="@project.ProjectId" class="btn btn-warning">Edit</a>
-                                    <a asp-area="ProjectManagement" asp-controller="Project" asp-action="Delete" asp-route-projectId="@project.ProjectId" class="btn btn-danger">Delete</a>
-                                    <a asp-area="ProjectManagement" asp-controller="ProjectTask" asp-action="Index" asp-route-projectId="@project.ProjectId" class="btn btn-secondary">Tasks</a>
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                    </tbody>
+                    <td>
+                    @* <td class="block"> *@
+                        <div class="table-majestic-list-btn-col">
+                            <a asp-area="ProjectManagement" asp-controller="Project" asp-action="Details" asp-route-projectId="@project.ProjectId" class="button button-details">Details</a>
+                            <a asp-area="ProjectManagement" asp-controller="Project" asp-action="Edit" asp-route-projectId="@project.ProjectId" class="button button-edit">Edit</a>
+                            <a asp-area="ProjectManagement" asp-controller="Project" asp-action="Delete" asp-route-projectId="@project.ProjectId" class="button button-delete">Delete</a>
+                            <a asp-area="ProjectManagement" asp-controller="ProjectTask" asp-action="Index" asp-route-projectId="@project.ProjectId" class="button button-tasks">Tasks</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        }
+        else
+        {
+            if (searchPerformed)
+            {
+                <p>No projects containing "@searchString" were found.</p>
             }
             else
             {
-                if (searchPerformed)
-                {
-                    <p>No projects containing "@searchString" were found.</p>
-                }
-                else
-                {
-                    <tr>
-                        <p colspan="5">No projects available.</p>
-                    </tr>
-                }
+                <tr>
+                    <p colspan="5">No projects available.</p>
+                </tr>
             }
-            </table>
         }
-        catch (ArgumentNullException)
-        {
-            <p class="not-found-db d-inline-block">Database not detected. Please try again later.</p>
-        }
-        catch (Exception)
-        {
-            <p class="not-found-fatal d-inline-block">Projects currently unavailable. Please try again later.</p>
-        }
-    </div>
+        </table>
+    }
+    catch (ArgumentNullException)
+    {
+        <p class="not-found-db d-inline-block">Database not detected. Please try again later.</p>
+    }
+    catch (Exception)
+    {
+        <p class="not-found-fatal d-inline-block">Projects currently unavailable. Please try again later.</p>
+    }
 </div>

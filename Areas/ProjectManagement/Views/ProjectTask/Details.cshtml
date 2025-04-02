@@ -6,66 +6,56 @@
     ViewBag.Page = "Task Details";
 }
 
-<div class="majestic-view card">
-    @* <h1 class="display-4 page-title text-center">@ViewBag.Page</h1> *@
-    <div class="card-body">
+<div id="majestic-view">
+    <h2>@Model.Title</h2>
 
-        @* Check for existence of a database *@
-        @try
-        {
-                <div class="card-body">
-                    <!-- Add formatting --> 
-                    <div class="display-6 page-subtitle text-center">
-                        @Html.DisplayNameFor(model => model.Title)
-                    </div>
-                    <br/>
+    @* Check for existence of a database *@
+    @try
+    {
+        @* <dl class="row"> *@
+        @*     <dt class="col-sm-3">Project ID</dt> *@
+        @*     <dd class="col-sm-9">@Model.ProjectTaskId</dd> *@
+        @* *@
+        @*     <dt class="col-sm-3">Description</dt> *@
+        @*     <dd class="col-sm-9">@Model.Description</dd> *@
+        @* *@
+        @*     <dt class="col-sm-3">Project (Try for name instead)</dt> *@
+        @*     <dd class="col-sm-9">@Model.ProjectId</dd> *@
+        @* </dl> *@
 
-                    @* <dl class="row"> *@
-                    @*     <dt class="col-sm-3">Project ID</dt> *@
-                    @*     <dd class="col-sm-9">@Model.ProjectTaskId</dd> *@
-                    @* *@
-                    @*     <dt class="col-sm-3">Description</dt> *@
-                    @*     <dd class="col-sm-9">@Model.Description</dd> *@
-                    @* *@
-                    @*     <dt class="col-sm-3">Project (Try for name instead)</dt> *@
-                    @*     <dd class="col-sm-9">@Model.ProjectId</dd> *@
-                    @* </dl> *@
+        <dl id="majestic-view-dt">
+            @* <dt class=""> *@
+            @*     @Html.DisplayNameFor(model => model.Title) *@
+            @* </dt> *@
+            @* <dd class=""> *@
+            @*     @Html.DisplayFor(model => model.Title) *@
+            @* </dd> *@
+            <dt class="">
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd class="">
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt class="">
+                @Html.DisplayNameFor(model => model.Project.Name)
+            </dt>
+            <dd class="">
+                @Html.DisplayFor(model => model.Project.Name)
+            </dd>
+        </dl>
 
-                    <dl class="row">
-                        <dt class="col-sm-3">
-                            @Html.DisplayNameFor(model => model.Title)
-                        </dt>
-                        <dd class="col-sm-9">
-                            @Html.DisplayFor(model => model.Title)
-                        </dd>
-                        <dt class="col-sm-3">
-                            @Html.DisplayNameFor(model => model.Description)
-                        </dt>
-                        <dd class="col-sm-9">
-                            @Html.DisplayFor(model => model.Description)
-                        </dd>
-                        <dt class="col-sm-3">
-                            @Html.DisplayNameFor(model => model.Project.Name)
-                        </dt>
-                        <dd class="col-sm-9">
-                            @Html.DisplayFor(model => model.Project.Name)
-                        </dd>
-                    </dl>
-
-                    <a asp-action="Index" asp-route-projectId="@Model.ProjectId" class="btn btn-secondary">Back to Tasks</a>
-                </div>
-        }
-        catch (NullReferenceException)
-        {
-            <p class="not-found-db d-inline-block">Database not detected.  Please try again later.</p>
-            <br/>
-            <a asp-action="Index" asp-route-projectId="@Model.ProjectId" class="btn btn-secondary">Back to Tasks</a>
-        }
-        catch (Exception)
-        {
-            <p class="not-found-fatal d-inline-block">Task currently unavailable.  Please try again later.</p>
-            <br/>
-            <a asp-action="Index" asp-route-projectId="@Model.ProjectId" class="btn btn-secondary">Back to Tasks</a>
-        }
-    </div>
+        <a asp-action="Index" asp-route-projectId="@Model.ProjectId" class="button button-primary">Back to Tasks</a>
+    }
+    catch (NullReferenceException)
+    {
+        <p class="not-found-db d-inline-block">Database not detected.  Please try again later.</p>
+        <br/>
+        <a asp-action="Index" asp-route-projectId="@Model.ProjectId" class="button button-primary">Back to Tasks</a>
+    }
+    catch (Exception)
+    {
+        <p class="not-found-fatal d-inline-block">Task currently unavailable.  Please try again later.</p>
+        <br/>
+        <a asp-action="Index" asp-route-projectId="@Model.ProjectId" class="button button-primary">Back to Tasks</a>
+    }
 </div>

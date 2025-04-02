@@ -19,7 +19,7 @@ public class ProjectSummaryViewComponent : ViewComponent
             .Include(p => p.Tasks)
             .FirstOrDefaultAsync(p => p.ProjectId == projectId);
         
-        return (project == null) ? Content("Project not found.") : View(project);
+        return project == null ? Content("Project not found.") : View(project);
         
         if (project == null) return Content("Project not found.");
         return View(project);

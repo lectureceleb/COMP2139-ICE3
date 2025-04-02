@@ -9,30 +9,31 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewBag.Title - @ViewBag.Page</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    @* <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/> *@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 </head>
 <body>
 
-<main id="layout-flex-vert">
+    <main id="layout-flex-vert">
+        <section id="layout-header">
+            <h1>@ViewBag.Page</h1>
+            <!-- Partial view for header -->
+            <div id="layout-header-partial">
+                @Html.Partial("_Header")
+            </div>
+        </section>
 
-    <h1 class="page-title display-4 text-center">@ViewBag.Page</h1>
-    <!-- Partial view for header -->
-    <section id="layout-header">
-        @Html.Partial("_Header")
-    </section>
+        <section id="layout-renderbody" role="main">
+            @RenderBody()
+        </section>
 
-    <section id="layout-renderbody" role="main">
-        @RenderBody()
-    </section>
-
-    <!-- Partial view for footer -->
-    <section id="layout-footer">
-        @Html.Partial("_Footer")
-    </section>
-</main>
+        <!-- Partial view for footer -->
+        <section id="layout-footer">
+            @Html.Partial("_Footer")
+        </section>
+    </main>
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

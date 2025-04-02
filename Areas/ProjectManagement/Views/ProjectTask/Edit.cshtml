@@ -6,34 +6,31 @@
     ViewBag.Page = "Edit Task";
 }
 
-<div class="majestic-view card">
-    @* <h1 class="display-4 page-title text-center">@ViewBag.Page</h1> *@
-    <div class="card-body">
+<div id="majestic-view">
+    <h2>Useful Title</h2>
+    <form id="majestic-form" asp-action="Edit" method="post">
+        @* Hidden field sends related ProjectId with form data *@
+        @Html.HiddenFor(model => model.ProjectTaskId)
+        @Html.HiddenFor(model => model.ProjectId)
 
-        <form asp-action="Edit" method="post">
-            @* Hidden field sends related ProjectId with form data *@
-            @Html.HiddenFor(model => model.ProjectTaskId)
-            @Html.HiddenFor(model => model.ProjectId)
+        <div class="majestic-form-row">
+            <label asp-for="Title" class=""></label>
+            <input asp-for="Title" class=""/>
+            <span asp-validation-for="Title" class="majestic-form-validation"></span>
+        </div>
 
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control"/>
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
+        <div class="majestic-form-row">
+            <label asp-for="Description" class=""></label>
+            <textarea asp-for="Description" class=""></textarea>
+            <span asp-validation-for="Description" class="majestic-form-validation"></span>
+        </div>
 
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <textarea asp-for="Description" class="form-control"></textarea>
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <br/>
-                <input type="submit" value="Edit" class="btn btn-primary">
-                <a asp-action="Index" asp-route-projectId="@Model.ProjectId" class="btn btn-warning">Cancel</a>
-            </div>
-        </form>
-    </div>
+        <div class="majestic-form-buttons">
+            <br/>
+            <input type="submit" value="Edit" class="button button-edit">
+            <a asp-action="Index" asp-route-projectId="@Model.ProjectId" class="button button-primary">Cancel</a>
+        </div>
+    </form>
 </div>
 
 @section Scripts {

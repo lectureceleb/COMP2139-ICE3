@@ -1,7 +1,8 @@
-body {
-    /*box-sizing: border-box;*/
+html {
+
     --color-strong-warning: red;
-    
+
+    /* Page Theme */
     --color-majestic-brand-1: #ff8c3a;      /* Title */
     --color-majestic-brand-2: lightyellow;  /* Nav/footer */
     --color-majestic-brand-3: #42a4ff;      /* Sides */
@@ -9,27 +10,528 @@ body {
     --color-majestic-accent: #ff8c3a;
     /*--color-majestic-accent: #ff8c3a;*/
     /*--color-majestic-accent: mediumslateblue;*/
-    
+
+    /* Text and border colours */
     --color-majestic-text-title: white;
     --color-majestic-text-main: black;
     --color-majestic-border-1: black;
-    
+
+    /* FontAwesome Icon Colours */
     --color-majestic-logo-1: var(--color-majestic-brand-1);
     --color-majestic-logo-2: var(--color-majestic-brand-2);
     --color-majestic-logo-3: var(--color-majestic-brand-3);
-    
     --color-majestic-logo-crown: #f2be02;
     --color-majestic-logo-dragon: #21b589;
+    --color-majestic-logo-meteor: #ff8c3a;
+    
+    /* Neutral colorway to not clash with theme colours */
+    scrollbar-color: var(--color-majestic-brand-2) var(--color-majestic-text-main);
+    /*scrollbar-color: var(--color-majestic-brand-2) var(--color-majestic-brand-1);*/
+    scrollbar-width: thin;
+    scroll-behavior: smooth;
 }
 
-.page-title {
+body {
     margin: 0;
+    background-color: var(--color-majestic-brand-3);
+    box-sizing: border-box;
+}
+
+/* GENERIC STYLING */
+.text-center {
+    text-align: center;
+}
+
+
+/* LAYOUT STYLING */
+
+/* Common colour scheme for navbar/footer */
+.majestic-nav, .majestic-footer {
+    background-color: var(--color-majestic-brand-2);
+}
+
+/* Main container for layout - vertical flex box */
+#layout-flex-vert {
+    width: 100%;
+    height: 100vh;
+    
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+}
+
+/* Layout Header */
+#layout-header {
+    background-color: var(--color-majestic-brand-1);
+}
+#layout-header > h1 {
+    margin: 0.5em 0;
+    
+    text-align: center;
+    font-family: "Helvetica Neue", sans-serif;
+    color: var(--color-majestic-text-title)
+}
+#layout-header-partial { /* _Header -> _Navbar */
+    border-top: 1px var(--color-majestic-border-1) solid;
+    border-bottom: 1px var(--color-majestic-border-1) solid;
+}
+
+/* Layout Navbar */
+
+/* Navbar FontAwesome Icons */
+.crown {
+    color: var(--color-majestic-logo-crown);
+}
+.dragon {
+    color: var(--color-majestic-logo-dragon);
+}
+.meteor {
+    color: var(--color-majestic-logo-meteor);
+}
+
+.home {
+    color: var(--color-majestic-brand-1);
+}
+.projects {
+    color: var(--color-majestic-logo-dragon);
+}
+.videos {
+    color: var(--color-majestic-logo-crown);
+}
+.about {
+    color: var(--color-majestic-brand-3);
+}
+.login, .register {
+    
+}
+
+/* Flex box (row) - 2 Flex Items */
+#majestic-nav {
+    height: inherit;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;   /* Push items to either end */
+    
+    border: solid 1px deeppink;
+    background-color: var(--color-majestic-brand-2);
+}
+/* Nav - Flex Item 1 */
+#majestic-nav-brand {
+    padding: 0 0.25em;   /* Push out images on either side */
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+
+    border: solid 1px deeppink;
+}
+#majestic-nav-brand:hover {
+    background-color: var(--color-majestic-brand-3);
+}
+#majestic-nav-brand:hover i {
+    color: var(--color-majestic-text-title);
+}
+#majestic-nav-brand a {
+    text-decoration: none;
+    color: var(--color-majestic-text-main)
+}
+#majestic-nav-brand span {
+    margin: 0 0.25em;   /* Push out images on either side */
+    display: inline-block;
+}
+#majestic-nav-brand img {
+    /*display: block;*/
+}
+
+/* Nav - Flex Item 2 */
+/* Nav Main - 2 Flex Items */
+#majestic-nav-links {
+    border: solid 1px deeppink;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+}
+
+/* Nav Main - Flex Item 1 */
+/* Vert Nav (activated by media rule) */
+#majestic-nav-links #vert-icon {
+    display: none;
+}
+/*#majestic-nav-links:hover #majestic-nav-link-list {*/
+/*    display: none;*/
+/*}*/
+/*#majestic-nav-links:hover #vert-icon {*/
+/*    height: 100%;*/
+/*    padding: 0 1em;*/
+
+/*    !* Stack text/images and center *!*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    justify-content: center;*/
+/*}*/
+/*#majestic-nav-links:hover #vert-icon i {*/
+/*    margin: 0 auto;*/
+/*}*/
+/* Hori Nav (default) */
+#majestic-nav-link-list {
+    margin: 0;
+    
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+
+    border: solid 1px #6f42c1;
+    list-style-type: none;
+    padding-inline-start: 0;
+}
+#majestic-nav-link-list .nav-item {
+    height: 100%;
+    border: solid 1px purple;
+    text-align: center;
+}
+#majestic-nav-link-list .nav-item a {
+    height: 100%;
+    padding: 0 1em;
+
+    /* Stack text/images and center */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+    text-decoration: none;
+    color: var(--color-majestic-text-main)
+}
+#majestic-nav-link-list .nav-item a:hover {
+    background-color: var(--color-majestic-brand-1);
+}
+
+#majestic-nav-link-list .nav-item a:hover i {
+    color: var(--color-majestic-text-title);
+}
+
+/* Nav Main - Flex Item 2 */
+#majestic-nav-search {
+    margin: 0 2em;
+    border: solid 1px deeppink;
+}
+#majestic-nav-search:hover {
+    background-color: var(--color-majestic-brand-3);    
+}
+#nav-search-inner {
+    width: fit-content;
+    margin: 0 auto 0.5em;
+}
+#majestic-nav-search input {
+    margin: 0.5em;
+    border: solid 1px var(--color-majestic-brand-1);
+    border-radius: 3px;
+}
+#majestic-nav-search input:hover {
+    border-color: var(--color-majestic-text-title);
+    background-color: aliceblue;
+}
+#majestic-nav-search input:focus-within {
+    border: solid 2px aliceblue;
+    outline: solid 2px var(--color-majestic-brand-3);
+    background-color: aliceblue;
+}
+#majestic-nav-search select, button {
+    border: inset 2px #000;
+    border-radius: 3px;
     background-color: var(--color-majestic-brand-1);
     color: var(--color-majestic-text-title);
 }
+#majestic-nav-search select:hover, button:hover {
+    border: solid 2px var(--color-majestic-text-title);
+    border-radius: 3px;
+    background-color: var(--color-majestic-brand-3);
+    color: aliceblue;
+}
+#majestic-nav-search option {
+    background-color: var(--color-majestic-brand-3);
+}
+#majestic-search-btn-img {
+    color: var(--color-majestic-text-title);
+}
+
+/* Layout View Container */
+/* INVESTIGATE!!!: Why is this so much taller than views? */
+#layout-renderbody {
+    width: 90%;
+    /*min-height: 100%;*/
+    margin: 1em auto;
+    border: solid 1px deeppink;
+    
+    flex: 1;   /* Take up remaining vertical space */
+    
+    
+    background-color: white;
+    
+}
+
+/* Layout Footer */
+#layout-footer {
+    border-top: 1px var(--color-majestic-border-1) solid;
+    border-bottom: 1px var(--color-majestic-border-1) solid;
+}
+.majestic-footer {
+    height: 2vh;
+}
+
+
+/* VIEW STYLING */
+
+/* Common styling */
 .page-subtitle {
     border-bottom: 1px solid var(--color-majestic-text-title);
     color: var(--color-majestic-brand-3);
+}
+
+/* Common button styling (links styled as buttons) */
+.button {
+    border: solid 2px var(--color-majestic-text-main);
+    border-radius: 5px;
+    padding: 0.5em;
+    
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+    color: var(--color-majestic-text-main);
+}
+.button:hover {
+    border-color: var(--color-majestic-brand-1);
+    color: var(--color-majestic-text-main);
+    background-color: revert;
+}
+.button-primary {
+    background-color: #ddd;}
+.button-create {
+    background-color: var(--color-majestic-logo-dragon);}
+.button-details {
+    background-color: var(--color-majestic-brand-3);
+    color: var(--color-majestic-text-title);
+}
+.button-edit {
+    background-color: yellow;}
+.button-delete {
+    background-color: red;}
+.button-tasks {
+    background-color: #ccc;}
+
+#majestic-view {
+    /*height: 100%;   !* Needed to stop footer from appearing in middle (Projects) - RESEARCH!!! *!*/
+    padding: 1em;
+}
+#majestic-view h2 {
+    margin: 0.5em 0;
+
+    text-align: center;
+    font-family: "Helvetica Neue", sans-serif;
+    color: var(--color-majestic-brand-3);
+}
+/* Home - Index Image */
+#majestic-view #index-img {
+    max-width: 100%;
+    height: auto;
+    margin: 0.5em auto;
+    border: solid 1px var(--color-majestic-brand-3);
+    
+    display: block;
+}
+
+/* View Tables */
+.table-majestic-list {
+    width: 100%;
+    height: fit-content;
+    border-collapse: collapse;
+    margin-top: 1rem;   /* Spacing after "Crate New Project" button */
+    
+    background-color: aliceblue;
+    /*background-color: var(--color-majestic-brand-2);*/
+    color: var(--color-majestic-text-main);
+}
+/* Table Header */
+.table-majestic-list thead {
+    background-color: var(--color-majestic-brand-1);
+}
+.table-majestic-list th {
+    border-top: solid 2px var(--color-majestic-border-1);
+    border-bottom: solid 2px var(--color-majestic-border-1);
+    padding: 0.5em;
+}
+.table-majestic-list th.left {
+    text-align: left;
+}
+/* Table Body */
+.table-majestic-list tbody {
+    /*padding: 1em;*/
+    vertical-align: top;
+    color: var(--color-majestic-text-main);
+}
+.table-majestic-list tbody > tr {
+    /*height: 100%;*/
+}
+.table-majestic-list tbody td {
+    height: 100%;
+    padding: 1em 0.5em;
+    border-bottom: solid 2px var(--color-majestic-border-1);
+}
+.table-majestic-list-btn-col {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-evenly;
+}
+.table-majestic-list-btn-col a {
+    margin: 0.25em 0;
+}
+
+/*!* VISUAL TEST ONLY *!*/
+/*.table-majestic-list td {*/
+/*    border-left: solid 1px var(--color-majestic-border-1);*/
+/*    border-right: solid 1px var(--color-majestic-border-1);*/
+/*}*/
+
+/* Common DTs */
+#majestic-view-dt {
+    border: solid 2px var(--color-majestic-border-1);
+    border-radius: 5px;
+    padding: 0.5em;
+}
+#majestic-view-dt dt {
+    font-weight: bold;
+}
+#majestic-view-dt dd {
+    padding-bottom: 1em;
+}
+
+/* Common View Form Formatting */
+#majestic-form, .majestic-form {
+    padding: 0.5em;
+}
+#majestic-form label, .majestic-form label {
+    font-weight: bold;
+}
+#majestic-form input, .majestic-form input {
+    display: block;
+}
+.majestic-form-input {
+    border: solid 1px deeppink;  /* ??? */
+}
+.majestic-form-row {
+    margin: 1em 0;
+    
+    display: flex;
+    flex-flow: column nowrap;
+}
+.majestic-form-row input, textarea, select {
+    border: solid 1px var(--color-majestic-brand-1);
+    border-radius: 5px;
+    padding: 0.5em;
+}
+.majestic-form-row input:hover, textarea:hover, select:hover {
+    border-color: var(--color-majestic-brand-3);
+    background-color: aliceblue;
+}
+.majestic-form-row input:focus, textarea:focus, select:focus {
+    border: solid 2px var(--color-majestic-brand-3);
+    outline: solid 2px var(--color-majestic-brand-3);
+    background-color: aliceblue;
+}
+.majestic-form-validation {
+    width: fit-content;
+    margin-top: 0.5em;
+    border: solid 1px var(--color-strong-warning);
+    border-radius: 3px;
+    padding: 0.25em;
+
+    background-color: yellow;
+    color: var(--color-strong-warning)
+}
+.majestic-form-validation:empty {
+    display: none;
+}
+.majestic-form-buttons {
+    /*margin-top: 1em;*/
+
+    display: flex;
+    flex-flow: row nowrap;
+}
+.majestic-form-buttons .button {
+    /* Add space between to buttons */
+    margin-right: 1em;
+}
+
+
+/* Home - Videos Page */
+.iframe-majestic-demo-section {
+    border: 1px solid var(--color-majestic-border-1);
+    margin-top: 3rem;
+    background-color: var(--color-majestic-brand-2);
+}
+.demo-video{
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio (divide 9 by 16 = 0.5625) */
+}
+.iframe-majestic-demo-section h3 {
+    margin-top: 0;
+    background-color: var(--color-majestic-brand-1);
+    border-bottom: 1px solid var(--color-majestic-border-1);
+    /*color: var(--color-majestic-brand-3);*/
+}
+.iframe-majestic-demo-section h4, p {
+    margin: 1rem 0 1rem 1rem;
+}
+.iframe-majestic-demo {
+    /*width: 560px;   !* Google provided dimensions *!*/
+    /*height: 315px;  !* Google provided dimensions *!*/
+    /*margin: auto;*/
+    /*display: block;*/
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Project Details */
+#majestic-view-project-comment {
+
+}
+#majestic-view-project-comment h3 {
+    margin: 0.5em 0;
+
+    text-align: center;
+    font-family: "Helvetica Neue", sans-serif;
+    color: var(--color-majestic-brand-3);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.page-title {
+    margin: 0;
+    padding-bottom: 0.75rem;   /* Prevent text from sitting right at the bottom of the container */
+    color: var(--color-majestic-text-title);
 }
 
 .not-found-db {
@@ -41,107 +543,17 @@ body {
     color: black;
 }
 .confirm-delete {
-    margin-left: 1em;
+    width: fit-content;
+    margin-top: 0.5em;
     padding: 5px;
     border: 1px solid var(--color-strong-warning);
     border-radius: 5px;
     background: var(--color-strong-warning);
     
+    display: block;
     color: white;   /* Play with the contrast of this */
 }
 
-/* Layout */
-#layout-flex-vert {
-    height: 100vh;
-    background-color: var(--color-majestic-brand-3);
-    /*background-color: var(--color-majestic-accent);*/
-    
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: space-between;
-    
-}
-#layout-header {
-    border-top: 1px var(--color-majestic-border-1) solid;
-    border-bottom: 1px var(--color-majestic-border-1) solid;
-}
-#layout-renderbody {
-    width: 90%;
-    height: 100%;
-    margin: 1em auto;
-    border-left: 1px var(--color-majestic-border-1) solid;
-    border-right: 1px var(--color-majestic-border-1) solid;
-    background: white;
-    /*background: var(--color-majestic-brand-1);*/
-}
-#layout-footer {
-    border-top: 1px var(--color-majestic-border-1) solid;
-    border-bottom: 1px var(--color-majestic-border-1) solid;
-}
-
-.majestic-nav,.majestic-footer {
-    background-color: var(--color-majestic-brand-2);    
-    /*background-color: var(--color-majestic-brand-2);*/
-}
-.majestic-nav {}
-.majestic-footer {}
-.majestic-search-btn {
-    background-color: var(--color-majestic-brand-1);
-    color: var(--color-majestic-text-title);
-}
-.majestic-search-btn-img {
-    color: var(--color-majestic-text-title);
-}
-
-.majestic-view {
-    height: 100%;
-    background-color: white;
-    overflow: hidden;
-}
-.majestic-view img {
-    /*margin-top: 1em;*/
-    /*border-top: solid 2px white;*/
-}
-
-/* Views */
-.table-majestic-list {
-    width: 100%;
-    height: fit-content;
-    margin-top: 1rem;   /* Spacing after "Crate New Project" button */
-    color: var(--color-majestic-text-main);
-}
-.table-majestic-list thead {
-    border: 1px solid var(--color-majestic-border-1);
-    background-color: var(--color-majestic-brand-1);
-    color: var(--color-majestic-text-title);    
-}
-.table-majestic-list th {
-    padding: 0.5em;
-    text-align: center;
-}
-.table-majestic-list tbody {
-    padding: 1em;
-    vertical-align: top;
-    color: var(--color-majestic-text-main);
-}
-.table-majestic-list tbody tr {
-    height: 100%;
-    border-bottom: 1px solid var(--color-majestic-border-1);
-}
-.table-majestic-list tbody td {
-    height: 100%;
-}
-.table-majestic-list tbody td.block {
-    height: 100%;
-}
-.table-majestic-list-btn-col {
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: space-evenly;
-}
-.table-majestic-list-btn-col a {
-    margin: 0.25em 0;
-}
 
 /* About Page */
 #about-table {
@@ -154,12 +566,18 @@ body {
     background-color: var(--color-majestic-brand-1);
     color: var(--color-majestic-text-title);
 }
+#about-table th > h2 {
+    color: var(--color-majestic-text-main);
+}
 #about-table td {
     background-color: var(--color-majestic-brand-2);
     border: 1px var(--color-majestic-brand-1) solid;
 }
+td.bold {
+    font-weight: bold;
+}
 td.value {
-    padding-left: 20px;   /* "Tab" spacing */
+    padding: 1em;   /* "Tab" spacing */
 }
 
 #about-info {
@@ -167,21 +585,51 @@ td.value {
     /*border: 1px solid var(--color-majestic-border-1);*/
 }
 
-/* Videos Page */
-.iframe-majestic-demo-section {
-    border: 1px solid var(--color-majestic-border-1);
-    margin-top: 3rem;
+
+/* Identity Razor Pages */
+.text-center + hr {
+    border-bottom: solid 3px var(--color-majestic-brand-3);
+    opacity: initial;
+    /*border-top: solid 3px var(--color-majestic-border-1);*/
+    /*color: black;*/
+}
+.text-center + hr + hr {
+    border-top: solid 3px var(--color-majestic-brand-1);
+    opacity: initial;
+}
+/*
+form input {
+    border: solid 1px var(--color-majestic-brand-1);
+    border-radius: 5px;
+    padding: 0.5em;
+
+    display: block;
+}
+.majestic-razor-form-input:hover {
+    border: solid 1px var(--color-majestic-brand-3);
+}
+*/
+.majestic-razor-form-input:focus {
+    border: dashed 1px var(--color-majestic-brand-3);
+    background-color: var(--color-majestic-brand-2);
+    color: var(--color-majestic-brand-3);
+}
+#majestic-razor-login-questions {
+    width: fit-content;
+    margin-top: 1em;
+    border: solid 2px var(--color-majestic-border-1);
+    border-radius: 5px;
+    padding-right: 1em;
     background-color: var(--color-majestic-brand-2);
 }
-.iframe-majestic-demo-section h2 {
-    background-color: var(--color-majestic-brand-1);
-    border-bottom: 1px solid var(--color-majestic-border-1);
-    color: var(--color-majestic-text-title);
+#majestic-razor-login-questions p:first-child {    
+    text-align: center;
+    color: var(--color-majestic-brand-3);
 }
-.iframe-majestic-demo-section h3, p {
-    margin: 1rem 0 1rem 1rem;
+#majestic-razor-login-questions p {    
+    text-align: center;
 }
-.iframe-majestic-demo {
-    margin: auto;
-    display: block;
+#majestic-razor-login-questions a {
+    text-decoration: none;
+    color: var(--color-majestic-text-main);
 }

@@ -6,30 +6,30 @@
     ViewBag.Page = "Delete Task";
 }
 
-<div class="majestic-view card">
-    @* <h1 class="display-4 page-title text-center">@ViewBag.Page</h1> *@
-    <div class="card-body">
-        <dl class="row">
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Title)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Title)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Description)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Description)
-            </dd>
-        </dl>
+<div id="majestic-view">
+    <h2>Useful Title</h2>
+    <dl id="majestic-view-dt">
+        <dt class="">
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd class="">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt class="">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+    </dl>
 
-        <form asp-action="Delete" method="post">
+    <form id="majestic-form" asp-action="Delete" method="post">
+        <div class="majestic-form-buttons">
             @* Hidden field sends related ProjectId with form data *@
             @Html.HiddenFor(model => model.ProjectTaskId)
-            <input type="submit" value="Delete" class="btn btn-danger">
-            <a asp-action="Index" asp-route-projectId="@Model.ProjectId" class="btn btn-warning">Cancel</a>
-            <p class="d-inline confirm-delete">Are you sure you want to delete this task?</p>
-        </form>
-    </div>
+            <input type="submit" value="Delete" class="button button-delete">
+            <a asp-action="Index" asp-route-projectId="@Model.ProjectId" class="button button-primary">Cancel</a>
+        </div>
+        <span class="confirm-delete">Are you sure you want to delete this task?</span>
+    </form>
 </div>

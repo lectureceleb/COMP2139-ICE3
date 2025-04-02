@@ -16,6 +16,7 @@ public class ProjectTaskController : Controller
     public ProjectTaskController(ApplicationDbContext context, ILogger<ProjectController> logger)
     {
         _context = context;
+        _logger = logger;
     }
 
     [HttpGet ("{projectId:int}")]

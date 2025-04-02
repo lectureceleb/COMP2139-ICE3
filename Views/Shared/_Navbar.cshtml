@@ -1,63 +1,104 @@
-﻿<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow majestic-nav">
-    <div class="container-fluid">
+﻿@inject SignInManager<IdentityUser> SignInManager
 
-        <a class="navbar-brand"
+<nav id="majestic-nav">
+    <div id="majestic-nav-brand">
+        <a class=""
            asp-area=""
            asp-controller="Home"
            asp-action="Index">
-            <i class="fa-solid fa-crown" style="color: var(--color-majestic-logo-crown);"></i>
-            @ViewBag.Brand <i class="fa-solid fa-dragon" style="color: #21b589;"></i>
-            <i class="fa-solid fa-meteor fa-rotate-by fa-xs" style="color: #ff8c3a; --fa-rotate-angle: 240deg;"></i>
+            <i class="fa-solid fa-crown crown"></i>
+            <span>@ViewBag.Brand</span> <i class="fa-solid fa-dragon dragon"></i>
+            <i class="fa-solid fa-meteor fa-rotate-by fa-xs meteor" style="--fa-rotate-angle: 240deg;"></i>
         </a>
-
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-            <form class="d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="GeneralSearch" method="get">
-                <div class="input-group">
-                    <input class="form-control me-2" type="text" placeholder="Search..." name="searchString" required />
-                    <select class="form-select me-2" name="searchType" required>
-                        <option value="" disabled selected>Search By:</option>
-                        <option value="Projects">Projects</option>
-                        <option value="Tasks">Tasks</option>
-                    </select>
-
-                    <button class="btn btn-outline-success majestic-search-btn" type="submit">
-                        <i class="fa-solid fa-magnifying-glass majestic-search-btn-img"></i> Find
-                    </button>
-                </div>
-            </form>
-
-            <ul class="navbar-nav flex-grow-1 justify-content-end">
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">
-                        <i class="fa-solid fa-hotel" style="color: var(--color-majestic-brand-1);"></i> Home
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="ProjectManagement" asp-controller="Project" asp-action="Index">
-                        <i class="fa-solid fa-clipboard" style="color: var(--color-majestic-logo-dragon);"></i> Projects
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Videos">
-                        <i class="fa-solid fa-film" style="color: #f2be02;"></i> Videos
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">
-                        <i class="fa-solid fa-circle-info" style="color: var(--color-majestic-brand-3);"></i> About
-                    </a>
-                </li>
-
-            </ul>
-        </div>
-
     </div>
+    
+    <div id="majestic-nav-links">
+
+        <div id="vert-icon">
+            <i class="fa-solid fa-bars"></i> Links
+        </div>
+        
+        <ul id="majestic-nav-link-list">
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="fa-solid fa-hotel home"></i> Home
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="ProjectManagement" asp-controller="Project" asp-action="Index">
+                    <i class="fa-solid fa-clipboard projects"></i> Projects
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Videos">
+                    <i class="fa-solid fa-film videos"></i> Videos
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">
+                    <i class="fa-solid fa-circle-info about"></i> About
+                </a>
+            </li>
+
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <li class="nav-item">
+                    <a class="nav-link"
+                       asp-area="Identity"
+                       asp-page="/Account/Manage/Index"
+                       title="Manage Your Profile">
+                        <i class="fa-solid fa-user"></i> Profile
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <form asp-area="Identity" asp-page="/Account/Logout" method="post">
+                        <button type="submit" class="" style="cursor: pointer">Logout</button>
+                    </form>
+                </li>
+            }
+            else
+            {
+                <li class="nav-item">
+                    <a class="nav-link"
+                       asp-area="Identity"
+                       asp-page="/Account/Register">
+                        <i class="fa-solid fa-user-plus"></i> Register
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link"
+                       asp-area="Identity"
+                       asp-page="/Account/Login">
+                        <i class="fa fa-sign-in-alt fa-user"></i> Login
+                    </a>
+                </li>
+            }
+        </ul>
+        
+    </div>
+        
+
+    <div id="majestic-nav-search">
+        <form asp-area="" asp-controller="Home" asp-action="GeneralSearch" method="get">
+            <label for="searchString"></label>
+            <input class="nav-search" type="text" placeholder="Search..." id="searchString" name="searchString" required/>
+            <div id="nav-search-inner">
+                <select class="" name="searchType" required>
+                    <option value="" disabled selected>Search By:</option>
+                    <option value="Projects">Projects</option>
+                    <option value="Tasks">Tasks</option>
+                </select>
+
+                <button type="submit">
+                    <i id="majestic-search-btn-img" class="fa-solid fa-magnifying-glass"></i> Find
+                </button>
+            </div>
+        </form>
+    </div>
+
 </nav>

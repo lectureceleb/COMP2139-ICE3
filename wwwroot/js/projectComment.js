@@ -21,7 +21,8 @@ function loadComments(projectId) {
 $(document).ready(function() {
   
   // loadComments - Call GetComments
-  const projectId = $('#project-comments input[name="ProjectId"]').val();
+  const projectId = $('#majestic-view-project-comment input[name="ProjectId"]').val();
+  // const projectId = $('#project-comments input[name="ProjectId"]').val();
   loadComments(projectId);
   
   // Submit event for new comment (AddComment)
@@ -32,7 +33,8 @@ $(document).ready(function() {
 
     const formData = {
       ProjectId: projectId,
-      Content: $('#project-comments textarea[name="Content"]').val()
+      Content: $('#majestic-view-project-comment textarea[name="Content"]').val()
+      // Content: $('#project-comments textarea[name="Content"]').val()
     };
 
     $.ajax({
@@ -42,7 +44,8 @@ $(document).ready(function() {
       data: JSON.stringify(formData),
       success: function(response) {
         if (response.success) {
-          $('#project-comments textarea[name="Content"]').val('')   // Clear new comment from form textarea
+          $('#majestic-view-project-comment textarea[name="Content"]').val('')   // Clear new comment from form textarea
+          // $('#project-comments textarea[name="Content"]').val('')   // Clear new comment from form textarea
           loadComments(projectId);   // Reload comments after adding a new one
         } else {
           alert(response.message);
