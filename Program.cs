@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using ICE3.Data;
+using ICE3.Services;
 using Serilog;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +28,9 @@ Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)   // Take config settings from appsettings.json
     .CreateLogger();
 
+// Inject our SendGrid email sender
+builder.Services.AddSingleton<IEmailSender, EmailSender>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -41,7 +46,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
+app.MapRazorPages();
 
 app.MapControllerRoute(
     name: "areas",
