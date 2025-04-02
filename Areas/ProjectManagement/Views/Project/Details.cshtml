@@ -48,13 +48,13 @@
     <div id="majestic-view-project-comment">   <!-- Currently not styling for this id -->
         <h3>Comments</h3>
         
-        <div id="comment-list" class="comments-container">   <!-- Currently no styling for this class -->
+        <div id="majestic-project-comments" class="comments-container">   <!-- Currently no styling for this class -->
             <!-- Comments will be loaded here using jQuery/AJAX -->
         </div>
         
         <form id="add-comment-form" class="">   <!-- Currently no styling for this id -->
             <input type="hidden" name="ProjectId" value="@Model.ProjectId" />
-            <div class="">
+            <div class="majestic-form-row">
                 <textarea name="Content" class="" placeholder="Add a comment..."></textarea>
             </div>
             <button type="submit" class="button button-create">Post a Comment</button>
@@ -68,7 +68,8 @@
     <script>
         $(document).ready(function() {
             // Changed var to const here (in case of debugging)
-            const projectId = $('#project-comments input[name="ProjectId"]').val();            
+            const projectId = $('#add-comment-form input[name="ProjectId"]').val();     
+            // const projectId = $('#project-comments input[name="ProjectId"]').val();     
             loadComments(projectId);
         });
     </script>

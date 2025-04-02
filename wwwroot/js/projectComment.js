@@ -4,24 +4,39 @@ function loadComments(projectId) {
     url: '/ProjectManagement/ProjectComment/GetComments?projectId=' + projectId,
     method: 'GET',
     success: function(data) {
+      
+      /*
       let commentsHtml = '';   // Convert the 2 "var" to "let" (in case of debugging)
       for (let i = 0; i < data.length; i++) {
-        commentsHtml += '<div class="comments">';   // Custom CSS (optional)
-        commentsHtml += '<p>' + data[i].content + '</p>';   // TROUBLESHOOT "undefined" ERROR!!!
+        commentsHtml += '<div class="project-comment">';   // Custom CSS (optional)
+        commentsHtml += '<span class="comment">' + data[i].content + '</span>';   // TROUBLESHOOT "undefined" ERROR!!!
         // commentsHtml += '<p>' + data[i].Content + '</p>';   // TROUBLESHOOT "undefined" ERROR!!!
-        commentsHtml += '<span>Posted on: ' + new Date(data[i].datePosted).toLocaleDateString() + '</span>';   // TROUBLESHOOT "Posted onInvalid Date" ERROR!!!
+        commentsHtml += '<span class="date">Posted on: ' + new Date(data[i].datePosted).toLocaleDateString() + '</span>';   // TROUBLESHOOT "Posted onInvalid Date" ERROR!!!
         // commentsHtml += '<span>Posted on' + new Date(data[i].DatePosted).toLocaleDateString() + '</span>';   // TROUBLESHOOT "Posted onInvalid Date" ERROR!!!
         commentsHtml += '</div>';
       }
-      $('#comment-list').html(commentsHtml);
-    } 
+      */
+      
+      let commentsHtml = '<table id="project-comment"><tr><th>Comment</th><th>Date</th></tr>';  
+      
+      for (let i = 0; i < data.length; i++) {
+        commentsHtml += '<tr>';
+        commentsHtml += '<td class="comment">' + data[i].content + '</td>';   // TROUBLESHOOT "undefined" ERROR!!!
+        // commentsHtml += '<p>' + data[i].Content + '</p>';   // TROUBLESHOOT "undefined" ERROR!!!
+        commentsHtml += '<td class="date">' + new Date(data[i].datePosted).toUTCString() + '</td>';   // TROUBLESHOOT "Posted onInvalid Date" ERROR!!!
+        // commentsHtml += '<span>Posted on' + new Date(data[i].DatePosted).toLocaleDateString() + '</span>';   // TROUBLESHOOT "Posted onInvalid Date" ERROR!!!
+        commentsHtml += '</tr>';
+      }
+      commentsHtml += '</table>';
+      $('#majestic-project-comments').html(commentsHtml);
+    }
   });  
 }
 
 $(document).ready(function() {
   
   // loadComments - Call GetComments
-  const projectId = $('#majestic-view-project-comment input[name="ProjectId"]').val();
+  const projectId = $('#add-comment-form input[name="ProjectId"]').val();
   // const projectId = $('#project-comments input[name="ProjectId"]').val();
   loadComments(projectId);
   
