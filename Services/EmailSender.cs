@@ -19,7 +19,7 @@ public class EmailSender : IEmailSender
         try
         {
             var client = new SendGridClient(_sendGridApiKey);
-            var from = new EmailAddress("omar.mcintosh@georgebrown.ca",
+            var from = new EmailAddress("omar.j.black@gmail.com",
                 "Majestic Solutions"); // Verified email in SendGrid
             var to = new EmailAddress(email);
             var msg = MailHelper.CreateSingleEmail(from, to, subject,

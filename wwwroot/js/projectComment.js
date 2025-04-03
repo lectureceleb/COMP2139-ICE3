@@ -20,6 +20,7 @@ function loadComments(projectId) {
       let commentsHtml = '<table id="project-comment"><tr><th>Comment</th><th>Date</th></tr>';  
       
       for (let i = 0; i < data.length; i++) {
+        const rawDate = new Date(data[i].datePosted);        
         commentsHtml += '<tr>';
         commentsHtml += '<td class="comment">' + data[i].content + '</td>';   // TROUBLESHOOT "undefined" ERROR!!!
         // commentsHtml += '<p>' + data[i].Content + '</p>';   // TROUBLESHOOT "undefined" ERROR!!!

@@ -30,7 +30,7 @@ public class ProjectCommentController : Controller
         return Json(comments);
     }
 
-    public async Task<IActionResult> AddComment ([FromBody] ProjectComment comment)
+    public async Task<IActionResult> AddComment([FromBody] ProjectComment comment)
     {
         _logger.LogInformation("Accessed ProjectCommentController AddComments at {Time}", DateTime.Now);
         if (ModelState.IsValid)
