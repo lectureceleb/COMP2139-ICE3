@@ -67,9 +67,7 @@
     <script src="~/js/projectComment.js"></script>
     <script>
         $(document).ready(function() {
-            // Changed var to const here (in case of debugging)
-            const projectId = $('#add-comment-form input[name="ProjectId"]').val();     
-            // const projectId = $('#project-comments input[name="ProjectId"]').val();     
+            const projectId = $('#add-comment-form input[name="ProjectId"]').val();    
             loadComments(projectId);
         });
     </script>

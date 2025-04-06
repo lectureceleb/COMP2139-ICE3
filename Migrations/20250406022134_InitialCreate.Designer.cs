@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ICE3.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250331123353_AddIdentityCoreMigrations")]
-    partial class AddIdentityCoreMigrations
+    [Migration("20250406022134_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

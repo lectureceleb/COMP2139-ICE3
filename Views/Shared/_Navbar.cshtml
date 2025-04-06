@@ -45,19 +45,27 @@
 
             @if (SignInManager.IsSignedIn(User))
             {
-                <li class="nav-item">
-                    <a class="nav-link"
-                       asp-area="Identity"
-                       asp-page="/Account/Manage/Index"
-                       title="Manage Your Profile">
-                        <i class="fa-solid fa-user"></i> Profile
-                    </a>
-                </li>
+                @* <li class="nav-item"> *@
+                @*     <a class="nav-link" *@
+                @*        asp-area="Identity" *@
+                @*        asp-page="/Account/Manage/Index" *@
+                @*        title="Manage Your Profile"> *@
+                @*         <i class="fa-solid fa-user"></i> Profile *@
+                @*     </a> *@
+                @* </li> *@
 
                 <li class="nav-item">
-                    <form asp-area="Identity" asp-page="/Account/Logout" method="post">
-                        <button type="submit" class="" style="cursor: pointer">Logout</button>
-                    </form>
+                    @* <form asp-area="Identity" asp-page="/Account/Logout" method="post"> *@
+                    @*     <button type="submit" class="" style="cursor: pointer"> *@
+                    @*         Logout *@
+                    @*     </button> *@
+                    @* </form> *@
+                    <a class="nav-item"
+
+                       asp-area="Identity"
+                       asp-page="/Account/Logout" method="post">
+                        <i class="fa-regular fa-circle-xmark"></i> Logout
+                    </a>
                 </li>
             }
             else

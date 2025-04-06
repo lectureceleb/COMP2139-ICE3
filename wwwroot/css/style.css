@@ -112,7 +112,6 @@ body {
     flex-flow: row nowrap;
     justify-content: space-between;   /* Push items to either end */
     
-    border: solid 1px deeppink;
     background-color: var(--color-majestic-brand-2);
 }
 /* Nav - Flex Item 1 */
@@ -124,7 +123,6 @@ body {
     justify-content: space-between;
     align-items: center;
 
-    border: solid 1px deeppink;
 }
 #majestic-nav-brand:hover {
     background-color: var(--color-majestic-brand-3);
@@ -147,7 +145,6 @@ body {
 /* Nav - Flex Item 2 */
 /* Nav Main - 2 Flex Items */
 #majestic-nav-links {
-    border: solid 1px deeppink;
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-evenly;
@@ -181,13 +178,11 @@ body {
     flex-flow: row nowrap;
     justify-content: space-evenly;
 
-    border: solid 1px #6f42c1;
     list-style-type: none;
     padding-inline-start: 0;
 }
 #majestic-nav-link-list .nav-item {
     height: 100%;
-    border: solid 1px purple;
     text-align: center;
 }
 #majestic-nav-link-list .nav-item a {
@@ -213,7 +208,6 @@ body {
 /* Nav Main - Flex Item 2 */
 #majestic-nav-search {
     margin: 0 2em;
-    border: solid 1px deeppink;
 }
 #majestic-nav-search:hover {
     background-color: var(--color-majestic-brand-3);    
@@ -256,18 +250,14 @@ body {
 }
 
 /* Layout View Container */
-/* INVESTIGATE!!!: Why is this so much taller than views? */
 #layout-renderbody {
     width: 90%;
     /*min-height: 100%;*/
     margin: 1em auto;
-    border: solid 1px deeppink;
-    
+    border: solid 1px deeppink;    
     flex: 1;   /* Take up remaining vertical space */
     
-    
-    background-color: white;
-    
+    background-color: white;    
 }
 
 /* Layout Footer */
